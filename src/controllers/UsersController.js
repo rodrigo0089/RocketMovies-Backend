@@ -22,16 +22,16 @@ class UsersController {
     const user_id = req.user.id
 
     const database = await sqliteConnection()
-    const user = await database.get('SELECT * FROM users WHERE id = (?)', [user_id])
+    const user = await database.get('SELECT * FROM users WHERE id = (?)', [user_id]);
 
     if (!user) {
-      throw new AppError('Usuário não encontrado.')
+      throw new AppError('Usuário não encontrado.');
     }
 
     const userWithUpdatedEmail = await database.get(
       'SELECT * FROM users WHERE email = (?)',
       [email]
-    )
+    );
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
       throw new AppError('Este email já está em uso.')
@@ -67,7 +67,7 @@ class UsersController {
       [user.name, user.email, user.password, user_id]
     )
 
-    return res.json()
+    return res.status(200).json();
   }
 }
 
